@@ -1,40 +1,35 @@
 # Mac OS X Dev Setup
 
-TODO:
-- [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop) and [Postman Interceptor](https://chrome.google.com/webstore/detail/postman-interceptor/aicmkgpgakddgnaphhhpliifpcfhicfo)
-- [GitHub Desktop](https://desktop.github.com/)
-- [WagonHQ](https://www.wagonhq.com/)
-- git autocomplete `curl -O https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash` https://git-scm.com/book/en/v1/Git-Basics-Tips-and-Tricks
+Forked from https://github.com/nicolashery/mac-dev-setup
 
-This document describes how I set up my developer environment on a new MacBook or iMac. We will set up popular programming languages (for example [Node](http://nodejs.org/) (JavaScript), [Python](http://www.python.org/), and [Ruby](http://www.ruby-lang.org/)). You may not need all of them for your projects, although I recommend having the three first three set up as they always come in handy.
+This document describes how I set up my developer environment on a new MacBook or iMac. We will set up popular programming languages (for example [Node](http://nodejs.org/) (JavaScript), [Python](http://www.python.org/), and [Ruby](http://www.ruby-lang.org/)). You may not need all of them for your projects, although I recommend having these three set up as they always come in handy.
 
 The document assumes you are new to Mac, but can also be useful if you are reinstalling a system and need some reminder. The steps below were tested on **OS X El Capitan** (10.11).
 
 (**Note**: This is the second version of this guide. If you are looking for the first version written for OS X Mountain Lion, see [1.0](https://github.com/nicolashery/mac-dev-setup/tree/v1.0.0))
 
-If you have any comments or suggestions, feel free to give me a shout [on Twitter](https://twitter.com/nicolahery)!
-
 - [System update](#system-update)
 - [System preferences](#system-preferences)
 - [Security](#security)
+- [Projects folder](#projects-folder)
 - [Google Chrome](#google-chrome)
 - [iTerm2](#iterm2)
 - [Homebrew](#homebrew)
+- [Consolas](#consolas)
 - [Beautiful terminal](#beautiful-terminal)
-- [iTerm2](#iterm2)
 - [Git](#git)
-- [Sublime Text](#sublime-text)
-- [Vim](#vim)
+- [Atom Text Editor](#atom-text-editor)
+- [EditorConfig](#editorconfig)
 - [Python](#python)
 - [Node.js](#nodejs)
 - [Ruby](#ruby)
-- [Heroku](#heroku)
+- [OpenSSL](#openssl)
+- [MySQL](#mysql)
+- [Github Desktop](#github-desktop)
+- [Sourcetree](#sourcetree)
+- [Google Cloud](#google-cloud)
 - [PostgreSQL](#postgresql)
-- [Redis](#redis)
-- [MongoDB](#mongodb)
-- [Elasticsearch](#elasticsearch)
-- [Projects folder](#projects-folder)
-- [Apps](#apps)
+- [Other apps](#other-apps)
 
 ## System update
 
@@ -49,7 +44,6 @@ In **Apple Icon > System Preferences**:
 - Trackpad > Tap to click
 - Keyboard > Key Repeat > Fast (all the way to the right)
 - Keyboard > Delay Until Repeat > Short (all the way to the right)
-- Dock > Automatically hide and show the Dock
 
 ## Security
 
@@ -59,8 +53,10 @@ In **Apple Icon > System Preferences**:
 
 - Users & Groups: If you haven't already set a password for your user during the initial set up, you should do so now
 - Security & Privacy > General: Require password immediately after sleep or screen saver begins (you can keep a grace period of a couple minutes if you prefer, but I like to know that my computer locks as soon as I close it)
-- Security & Privacy > FileVault: Make sure FileVault disk encryption is enabled
-- iCloud: If you haven't already done so during set up, enable Find My Mac
+
+## Projects folder
+
+This really depends on how you want to organize your files, but I like to put all my version-controlled projects in `~/Projects`. Other documents I may have, or things not yet under version control, I like to put in `~/Documents`. Sometimes, I get mixed up and try to access my projects by going to `~/Documents/Projects`, so it may be worth it to create a symlink between the two.
 
 ## Google Chrome
 
@@ -95,6 +91,10 @@ xcode-select --install
 ```
 
 Once that is done, we can install Hombrew by copy-pasting the installation command from the [Homebrew homepage]([Homebrew](http://brew.sh/) inside the terminal.
+
+```
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
 
 Follow the steps on the screen. You will be prompted for your user password so Homebrew can set appropriate permissions.
 
@@ -178,31 +178,56 @@ At anytime you can view which services are running with:
 brew services list
 ```
 
+## Consolas
+
+I really like the Consolas font for coding. Being a Microsoft (!) font, it is not installed by default. Since we're going to be looking at a lot of terminal output and code, let's install it now.
+
+There are two ways we can install it. If you bought **Microsoft Office for Mac**, install that and Consolas will be installed as well.
+
+If you don't have Office, follow these steps:
+
+```
+brew install cabextract
+cd ~/Downloads
+mkdir consolas
+cd consolas
+curl -LO https://sourceforge.net/projects/mscorefonts2/files/cabs/PowerPointViewer.exe
+cabextract PowerPointViewer.exe
+cabextract ppviewer.cab
+open CONSOLA*.TTF
+```
+
+And click **Install Font**. Thanks to Alexander Zhuravlev for his [post](http://blog.ikato.com/post/15675823000/how-to-install-consolas-font-on-mac-os-x).
+
 ## Beautiful terminal
 
 Since we spend so much time in the terminal, we should try to make it a more pleasant and colorful place. What follows might seem like a lot of work, but trust me, it'll make the development experience so much better.
 
-First let's add some color. There are many great color schemes out there, but if you don't know where to start you can try [Oceanic Next](https://github.com/mhartington/oceanic-next-iterm). Download the iTerm presets for the theme by running:
+Let's go ahead and start by changing the font. In **iTerm > Preferences...**, under the tab **Profiles**, section **Text**, change both fonts to **Consolas 13pt**.
 
-```
-cd ~/Downloads
-curl -O https://raw.githubusercontent.com/mhartington/oceanic-next-iterm/master/Oceanic-Next.itermcolors
-```
+Now let's add some color. I'm a big fan of the [Solarized](http://ethanschoonover.com/solarized) color scheme. It is supposed to be scientifically optimal for the eyes. I just find it pretty.
 
-Then, in **iTerm2 Preferences**, under **Profiles** and **Colors**, go to **Load Presets... > Import...**, find and open the **Oceanic-Next.itermcolors** file we just downloaded. Go back to **Load Presets...** and select **Oceanic Next** to activate it. Voila!
+Scroll down the page and download the latest version. Unzip the archive. In it you will find the `iterm2-colors-solarized` folder with a `README.md` file, but I will just walk you through it here:
+
+- In **iTerm2 Preferences**, under **Profiles** and **Colors**, go to **Load Presets... > Import...**, find and open the two **.itermcolors** files we downloaded.
+- Go back to **Load Presets...** and select **Solarized Dark** or **Solarized Light** to activate it. Voila!
+
+**Note**: You don't have to do this, but there is one color in the **Solarized Dark** preset I don't agree with, which is *Bright Black*. You'll notice it's too close to *Black*. So I change it to be the same as *Bright Yellow*, i.e. **R 83 G 104 B 112**.
 
 Not a lot of colors yet. We need to tweak a little bit our Unix user's profile for that. This is done (on OS X and Linux), in the `~/.bash_profile` text file (`~` stands for the user's home directory).
 
-We'll come back to the details of that later, but for now, just download the files [.bash_profile](https://raw.githubusercontent.com/nicolashery/mac-dev-setup/master/.bash_profile), [.bash_prompt](https://raw.githubusercontent.com/nicolashery/mac-dev-setup/master/.bash_prompt), [.aliases](https://raw.githubusercontent.com/nicolashery/mac-dev-setup/master/.aliases) attached to this document into your home directory (`.bash_profile` is the one that gets loaded, I've set it up to call the others):
+We'll come back to the details of that later, but for now, just download the files [.bash_profile](https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.bash_profile), [.bash_prompt](https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.bash_prompt), [.aliases](https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.aliases) attached to this document into your home directory (`.bash_profile` is the one that gets loaded, I've set it up to call the others):
 
 ```
 cd ~
-curl -O https://raw.githubusercontent.com/nicolashery/mac-dev-setup/master/.bash_profile
-curl -O https://raw.githubusercontent.com/nicolashery/mac-dev-setup/master/.bash_prompt
-curl -O https://raw.githubusercontent.com/nicolashery/mac-dev-setup/master/.aliases
+curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.bash_profile
+curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.bash_prompt
+curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.aliases
 ```
 
 With that, open a new terminal tab (Cmd+T) and see the change! Try the list commands: `ls`, `ls -lh` (aliased to `ll`), `ls -lha` (aliased to `la`).
+
+At this point you can also change your computer's name, which shows up in this terminal prompt. If you want to do so, go to **System Preferences** > **Sharing**. For example, I changed mine from "Nicolas's MacBook Air" to just "MacBook Air", so it shows up as `MacBook-Air` in the terminal.
 
 Now we have a terminal we can work with!
 
@@ -225,16 +250,16 @@ which git
 
 The output should be `/usr/local/bin/git`.
 
-Let's set up some basic configuration. Download the [.gitconfig](https://raw.githubusercontent.com/nicolashery/mac-dev-setup/master/.gitconfig) file to your home directory:
+Let's set up some basic configuration. Download the [.gitconfig](https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.gitconfig) file to your home directory:
 
 ```
 cd ~
-curl -O https://raw.githubusercontent.com/nicolashery/mac-dev-setup/master/.gitconfig
+curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.gitconfig
 ```
 
 It will add some color to the `status`, `branch`, and `diff` Git commands, as well as a couple aliases. Feel free to take a look at the contents of the file, and add to it to your liking.
 
-Next, we'll define your Git user (should be the same name and email you use for [GitHub](https://github.com/) and [Heroku](http://www.heroku.com/)):
+Next, we'll define your Git user (should be the same name and email you use for [GitHub](https://github.com/)):
 
 ```
 git config --global user.name "Your Name Here"
@@ -243,129 +268,47 @@ git config --global user.email "your_email@youremail.com"
 
 They will get added to your `.gitconfig` file.
 
+To push code to your GitHub repositories, we're going to use the recommended HTTPS method (versus SSH). So you don't have to type your username and password every time, let's enable Git password caching as described [here](https://help.github.com/articles/set-up-git):
+
+```
+git config --global credential.helper osxkeychain
+```
+
 On a Mac, it is important to remember to add `.DS_Store` (a hidden OS X system file that's put in folders) to your project `.gitignore` files. You can take a look at this repository's [.gitignore](https://github.com/nicolashery/mac-dev-setup/blob/master/.gitignore) file for inspiration. You can also set it up in a global `.gitignore` file by cloning it into your home directory (but you'll want to make sure any collaborators also do it):
 
 ```
 cd ~
-curl -O https://raw.githubusercontent.com/nicolashery/mac-dev-setup/master/.gitignore
+curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.gitignore
 ```
 
-## Sublime Text
+## Atom Text Editor
 
-With the terminal, the text editor is a developer's most important tool. Everyone has their preferences, but if you're just getting started and looking for something simple that works, [Sublime Text](http://www.sublimetext.com/) is a pretty good option.
+With the terminal, the text editor is a developer's most important tool. Everyone has their preferences, but if you're just getting started and looking for something simple that works, I recommend [Atom](https://atom.io/). Some people prefer [Sublime Text](http://www.sublimetext.com/), so if you would rather use that, look up the instructions in the [original setup instructions](https://raw.githubusercontent.com/nicolashery/mac-dev-setup).
 
-Go ahead and [download](http://www.sublimetext.com/3) it. Open the **.dmg** file, drag-and-drop in the **Applications** folder, you know the drill now. Launch the application.
+Go ahead and [download](https://atom.io/) it. Open the **.dmg** file, drag-and-drop in the **Applications** folder, you know the drill now. Launch the application.
 
-**Note**: At this point I'm going to create a shortcut on the OS X Dock for both for Sublime Text and iTerm. To do so, right-click on the running application and select **Options > Keep in Dock**.
+**Note**: At this point I'm going to create a shortcut on the OS X Dock for both for Atom and iTerm. To do so, right-click on the running application and select **Options > Keep in Dock**.
 
-Sublime Text is not free, but I think it has an unlimited "evaluation period". Anyhow, we're going to be using it so much that even the seemingly expensive $70 price tag is worth every penny. If you can afford it, I suggest you [support](http://www.sublimetext.com/buy) this awesome tool. :)
+You are welcome to use some of my Atom editor settings. Go to **Atom > Preferences > Editor** and change the following:
 
-Just like the terminal, let's configure our editor a little. Go to **Sublime Text > Preferences > Settings - User** and paste the following in the file that just opened:
+**Font Family:** Monaco, Consolas, 'Courier New', Courier
+**Font Size:** 15
+**Preferred Line Length:** 120
+Check **Scroll Past End**
+Check **Soft Tabs**
+**Tab Length:** 4
+**Tab Type:** auto
 
-```json
-{
-  "font_size": 13,
-  "rulers":
-  [
-      79
-  ],
-  "highlight_line": true,
-  "bold_folder_labels": true,
-  "highlight_modified_tabs": true,
-  "tab_size": 2,
-  "translate_tabs_to_spaces": true,
-  "word_wrap": false,
-  "indent_to_bracket": true,
-  "trim_trailing_white_space_on_save": true,
-  "ensure_newline_at_eof_on_save": true
-}
-```
+## EditorConfig
 
-Feel free to tweak these (like the font size) to your preference. When done, save the file and close it.
-
-I use tab size 2 for everything except Python and Markdown files, where I use tab size 4. If you have a Python and Markdown file handy (or create dummy ones with `$ touch dummy.py`), for each one, open it and go to **Sublime Text > Preferences > Settings - More > Syntax Specific - User** to paste in:
-
-```json
-{
-  "tab_size": 4
-}
-```
-
-
-Sublime Text is very extensible. To customize it further, we are going to install the [Sublime Package Control](https://packagecontrol.io/installation). Copy the snippet for Sublime Text 3 from the installation page, and back in your editor open the console with **Ctrl+\`** (back tick), paste the snippet, and hit **Enter**.
-
-Once installation is complete, restart Sublime Text (Note: on the Mac, closing all windows doesn't close the application, you need to hit **Cmd+Q**).
-
-To install a new package, open the command list with **Cmd+Shift+P**, type "install", and select **Package Control: Install Package**.
-
-Let's use this to customize the color of our editor. I'm going to change two things: the **Theme** (which is how the tabs, the file explorer on the left, etc. look) and the **Color Scheme** (the colors of the code). Again, feel free to pick different ones, or stick with the default.
-
-A popular Theme is the [Soda Theme](https://github.com/buymeasoda/soda-theme). To install it, open Package Control's installation list as described above and type "soda". Select **Theme - Soda** from the list.
-
-After the installation is complete, go to **Sublime Text > Preferences > Settings - User** and add the following lines:
-
-```json
-{
-  "theme": "Soda Dark 3.sublime-theme",
-  "soda_classic_tabs": true
-}
-```
-
-For the **Color Scheme**, you can pick one from those that ship with Sublime Text by going to **Sublime Text > Preferences > Color Scheme**. Or you can install one using Package Control. Let's do that and install Oceanic Next to match the color scheme of our terminal. Hit **Cmd+Shift+P**, select **Package Control: Install Package**, search for "oceanic next", and select **Oceanic Next Color Scheme**.
-
-Activate the Color Scheme by adding this line to **Sublime Text > Preferences > Settings - User**:
-
-```json
-{
-  "color_scheme": "Packages/Oceanic Next Color Scheme/Oceanic Next.tmTheme"
-}
-```
-
-Sublime Text already supports syntax highlighting for a lot of languages. You can always install more for other languages you work with using Package Control.
-
-Let's create a [command line shortcut](http://www.sublimetext.com/docs/3/osx_command_line.html) so we can launch Sublime Text from the terminal:
+To make sure that all our code uses the same indentation and spacing type, we're going to use the awesome [EditorConfig](https://editorconfig.org/) plugin for our text editor. To install the plugin for Atom, go to **Atom > Preferences > Install**, search for "editorconfig", and install the plugin. Now download the EditorConfig file from this repo and place it at the project root directory.
 
 ```
-cd ~
-mkdir bin
-ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" ~/bin/subl
+cd path/to/my/project
+curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.editorconfig
 ```
 
-Now I can open a file with `$ subl myfile.py` or start a new project in the current directory with `$ subl .`. Pretty cool.
-
-## Vim
-
-Although Sublime Text will be our main editor, it is a good idea to learn some very basic usage of [Vim](http://www.vim.org/). It is a very popular text editor inside the terminal, and is usually pre-installed on any Unix system.
-
-For example, when you run a Git commit, it will open Vim to allow you to type the commit message.
-
-I suggest you read a tutorial on Vim. Grasping the concept of the two "modes" of the editor, **Insert** (by pressing `i`) and **Normal** (by pressing `Esc` to exit Insert mode), will be the part that feels most unnatural. Also, it is good to know that typing `:wq` when in Normal mode will save and exit. After that, it's just remembering a few important keys.
-
-Vim's default settings aren't great, and you could spend a lot of time tweaking your configuration (the `.vimrc` file). But if you're like me and just use Vim occasionally, you'll be happy to know that [Tim Pope](https://github.com/tpope) has put together some sensible defaults to quickly get started.
-
-First, install [pathogen.vim](https://github.com/tpope/vim-pathogen) by running:
-
-```
-mkdir -p ~/.vim/autoload ~/.vim/bundle && \
-curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
-```
-
-Then create a file `~/.vimrc` (you can use `$ subl ~/.vimrc`), and paste in the following:
-
-```
-execute pathogen#infect()
-syntax on
-filetype plugin indent on
-```
-
-And finally, install the Vim "sensible defaults" by running:
-
-```
-cd ~/.vim/bundle
-git clone git://github.com/tpope/vim-sensible.git
-```
-
-With that, Vim will look a lot better next time you open it!
+For every new project you start, you'll need to copy this file into the project root directory.
 
 ## Python
 
@@ -377,7 +320,7 @@ Install `pyenv` via Homebrew by running:
 brew install pyenv
 ```
 
-When finished, you should see instructions to add something to your profile. Open your `.bash_profile` in the home directory (you can use `$ subl ~/.bash_profile`), and add the following line:
+When finished, you should see instructions to add something to your profile. Open your `.bash_profile` in the home directory and add the following line:
 
 ```bash
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
@@ -398,7 +341,7 @@ pyenv install --list
 Look for the latest 2.7.x version (or 3.x), and install it:
 
 ```
-pyenv install 2.7.13 # the latest version might be different
+pyenv install 2.7.11 # the latest version might be different
 ```
 
 List the Python versions you have locally with:
@@ -410,7 +353,7 @@ pyenv versions
 The start (`*`) should indicate we are still using the `system` version. We should set the one we installed to be the default:
 
 ```
-pyenv global 2.7.13
+pyenv global 2.7.11
 ```
 
 You should now see that version when running:
@@ -473,25 +416,20 @@ And reload it with:
 source ~/.bash_profile
 ```
 
-Now, let's say you have a project called `myproject`. You can set up virtualenv for that project and the Python version it uses (for example 2.7.13):
+Now, let's say you have a project in a directory called `myproject`. You can set up virtualenv for that project and the Python version it uses (for example 2.7.11):
 
 ```
-pyenv virtualenv 2.7.13 myproject
+cd ~/Projects/myproject
+pyenv virtualenv 2.7.11 myproject
 ```
 
-See the list of virtualenvs you created with:
+To use your project's virtualenv, you need to **activate** it first. Instead of running `activate`, make sure you are in your project directory and do the following:
 
 ```
-pyenv virtualenvs
+pyenv local myproject
 ```
 
-To use your project's virtualenv, you need to **activate** it first (in every terminal where you are working on your project):
-
-```
-pyenv activate myproject
-```
-
-You should see a `(myproject)` appear at the baeginning of your terminal prompt indicating that you are working inside the virtualenv. Now when you install something:
+You should see a `(myproject)` appear at the beginning of your terminal prompt indicating that you are working inside the virtualenv. Now when you install something:
 
 ```
 pip install <package>
@@ -501,7 +439,7 @@ It will get installed in that virtualenv's folder, and not conflict with other p
 
 ### IPython
 
-[IPython](http://ipython.org/) is an awesome project which provides a much better Python shell than the one you get from running `$ python` in the command-line. It has many cool functions (running Unix commands from the Python shell, easy copy & paste, creating Matplotlib charts in-line, etc.) and I'll let you refer to the [documentation](http://ipython.org/ipython-doc/stable/index.html) to discover them.
+[IPython](http://ipython.org/) is an awesome project which provides a much better Python shell than the one you get from running `python` in the command-line. It has many cool functions (running Unix commands from the Python shell, easy copy & paste, creating Matplotlib charts in-line, etc.) and I'll let you refer to the [documentation](http://ipython.org/ipython-doc/stable/index.html) to discover them.
 
 Before we install IPython, we'll need to get some dependencies. Run the following:
 
@@ -515,7 +453,7 @@ Once it's done, we can install IPython with all the available options:
 
     $ pip install ipython[zmq,qtconsole,notebook,test]
 
-You can launch IPython from the command line with `$ ipython`, but what's more interesting is to use its [QT Console](http://ipython.org/ipython-doc/stable/interactive/qtconsole.html). Launch the QT Console by running:
+You can launch IPython from the command line with `ipython`, but what's more interesting is to use its [QT Console](http://ipython.org/ipython-doc/stable/interactive/qtconsole.html). Launch the QT Console by running:
 
     $ ipython qtconsole
 
@@ -523,35 +461,15 @@ You can also customize the font it uses:
 
     $ ipython qtconsole --ConsoleWidget.font_family="Consolas" --ConsoleWidget.font_size=13
 
-And since I'm lazy and I don't want to type or copy & paste that all the time, I'm going to create an alias for it. Create a `.extra` text file in your home directory with `$ subl ~/.extra` (I've set up `.bash_profile` to load `.extra`), and add the following line:
+And since I'm lazy and I don't want to type or copy & paste that all the time, I'm going to create an alias for it. Create a `.extra` text file in your home directory with `atom ~/.extra` (I've set up `.bash_profile` to load `.extra`), and add the following line:
 
 ```bash
 alias ipy='ipython qtconsole --ConsoleWidget.font_family="Consolas" --ConsoleWidget.font_size=13'
 ```
 
-Open a fresh terminal. Now when you run `$ ipy`, it will launch the QT Console with your configured options.
+Open a fresh terminal. Now when you run `ipy`, it will launch the QT Console with your configured options.
 
-To use the in-line Matplotlib functionality (nice for scientific computing), run `$ ipy --pylab=inline`.
-
-### Numpy and Scipy
-
-The [Numpy](http://numpy.scipy.org/) and [Scipy](http://www.scipy.org/SciPy) scientific libraries for Python are always a little tricky to install from source because they have all these dependencies they need to build correctly. Luckily for us, [Samuel John](http://www.samueljohn.de/) has put together some [Homebrew formulae](https://github.com/samueljohn/homebrew-python) to make it easier to install these Python libraries.
-
-First, grab the special formulae (which are not part of Homebrew core):
-
-    $ brew tap samueljohn/python
-    $ brew tap homebrew/science
-
-Then, install the `gfortran` dependency (now in `gcc`) which we will need to build the libraries:
-
-    $ brew install gcc
-
-Finally, you can install Numpy and Scipy with:
-
-    $ brew install numpy
-    $ brew install scipy
-
-(It may take a few minutes to build.)
+To use the in-line Matplotlib functionality (nice for scientific computing), run `ipy --pylab=inline`.
 
 ## Node.js
 
@@ -626,75 +544,45 @@ To uninstall a package:
 npm uninstall <package>
 ```
 
-### ESLint
-
-ESLint is a JavaScript developer's best friend. With Sublime Text, you can get real-time linting right inside the editor thanks to the [SublimeLinter](http://www.sublimelinter.com) package.
-
-First install [eslint_d](https://github.com/mantoni/eslint_d.js) globally via npm:
-
-```
-npm install -g eslint_d
-```
-
-Then install the following packages through Sublime Text's Package Control:
-
-- **SublimeLinter**
-- **SublimeLinter-contrib-eslint_d**
-
 ## Ruby
 
 Like Python, [Ruby](http://www.ruby-lang.org/) is already installed on Unix systems. But we don't want to mess around with that installation. More importantly, we want to be able to use the latest version of Ruby.
 
 ### Install
 
-When installing Ruby, best practice is to use [RVM](https://rvm.io/) (Ruby Version Manager) which allows you to manage multiple versions of Ruby on the same machine. Installing RVM, as well as the latest version of Ruby, is very easy. Just run:
+We're going to use [rbenv](https://github.com/rbenv/rbenv), which allows you to manage multiple versions of Ruby on the same machine. Installing rbenv, as well as the latest version of Ruby, is very easy. Just run:
 
 ```
-curl -sSL https://get.rvm.io | bash -s stable --ruby
+brew install rbenv
 ```
 
-When it is done, both RVM and a fresh version of Ruby are installed.
-
-Open a new terminal and run:
+When it is done, initialize it:
 
 ```
-type rvm | head -1
+rbenv init
 ```
-
-You should get the output `rvm is a function`.
 
 ### Usage
 
 The following command will show you which versions of Ruby you have installed:
 
 ```
-rvm list
+rbenv versions
 ```
 
-The one that was just installed, Ruby 2, should be set as default. When managing multiple versions, you switch between them with:
+Now we can install a version of Ruby and use that instead of the system Ruby:
 
 ```
-rvm use system # Switch back to system install (ex: 2.0)
-rvm use 2.3 --default # Switch to 2.3 and sets it as default
+rbenv install 2.5.0 # change this to your preferred version
+rbenv global 2.5.0
 ```
 
-Run the following to make sure the version you want is being used:
+Run `rbenv versions` again to make sure the version you want is being used.
+
+To update rbenv itself, use:
 
 ```
-which ruby
-ruby --version
-```
-
-You can install another version with:
-
-```
-rvm install 2.2
-```
-
-To update RVM itself, use:
-
-```
-rvm get stable
+brew upgrade rbenv ruby-build
 ```
 
 [RubyGems](http://rubygems.org/), the Ruby package manager, was also installed:
@@ -745,37 +633,163 @@ RubyGems keeps old versions of gems, so feel free to do come cleaning after upda
 gem cleanup
 ```
 
-## Heroku
+## OpenSSL
 
-[Heroku](http://www.heroku.com/), if you're not already familiar with it, is a [Platform-as-a-Service](http://en.wikipedia.org/wiki/Platform_as_a_service) (PaaS) that makes it really easy to deploy your apps online. There are other similar solutions out there, but Heroku was among the first and is currently the most popular. Not only does it make a developer's life easier, but I find that having Heroku deployment in mind when building an app forces you to follow modern app development [best practices](http://www.12factor.net/).
-
-Assuming that you have an account (sign up if you don't), let's install the [Heroku CLI](https://devcenter.heroku.com/categories/command-line). Heroku offers a Mac OS X installer, the [Heroku Toolbelt](https://toolbelt.heroku.com/), that includes the client. But for these kind of tools, I prefer using Homebrew. It allows us to keep better track of what we have installed. Luckily for us, Homebrew includes a `heroku-toolbelt` formula:
+[OpenSSL](https://www.openssl.org/) is an SSL toolkit and cryptography library which is included with macOS. The version included with macOS is often very old and can cause issues when used in our projects. We can fix this by installing a newer version with Homebrew and, if needed, creating a symlink to force the use of the Homebrew version over the system version.
 
 ```
-brew install heroku-toolbelt
+brew update
+brew install openssl
+brew link --force openssl
 ```
 
-Login to your Heroku account using your email and password:
+Check the version number to make sure we aren't using an outdated or vulnerable version:
 
 ```
-heroku login
+openssl version -a
 ```
 
-Once logged-in, you're ready to deploy apps! Heroku has a great [Getting Started](https://devcenter.heroku.com/start) guides for different languages, so I'll let you refer to that. Heroku uses Git to push code for deployment, so make sure your app is under Git version control. A quick cheat sheet (if you've used Heroku before):
+If it's outdated, check to see whether the system openssl is still being used by typing
 
 ```
-cd myapp/
-heroku create myapp
-git push heroku master
-heroku ps
-heroku logs -t
+which openssl
 ```
 
-The [Heroku Dev Center](https://devcenter.heroku.com/) is full of great resources, so be sure to check it out!
+If you see the system openssl, create a symlink that will for the system to use the Homebrew version:
+
+```
+ln -s /usr/local/Cellar/openssl/1.0.1g/bin/openssl /usr/local/bin/openssl
+```
+
+## MySQL
+
+### Install
+
+We will install [MySQL](http://www.mysql.com/) using Homebrew, which will also install some header files needed for MySQL bindings in different programming languages (MySQL-Python for one).
+
+To install, run:
+
+```
+brew update # Always good to do
+brew install mysql
+```
+
+### Usage
+
+To start the MySQL server, we can use our nifty Homebrew Services:
+
+```
+brew services start mysql
+```
+
+To connect with the command-line client, run:
+
+```
+mysql -uroot
+```
+
+(Use `exit` to quit the MySQL shell.)
+
+**Note**: By default, the MySQL user `root` has no password. It doesn't really matter for a local development database. If you wish to change it though, you can use `mysqladmin -u root password 'new-password'`.
+
+### Database Management
+
+To manage your MySQL databases, I recommend using [Sequel Pro](http://www.sequelpro.com), a MySQL management tool designed for macOS.
+
+## GitHub Desktop
+
+[GitHub Desktop](https://desktop.github.com/) is a GUI for git and allows you to work with git repositories on GitHub. Download it, unzip the archive, and copy GitHub Desktop into your Applications folder. Open it and login with your Github account.
+
+When you clone a repository, make sure you are cloning it to the "Projects folder" you set up earlier.
+
+## Sourcetree
+
+[Sourcetree](https://www.sourcetreeapp.com) is another popular GUI for git that is used for repositories stored in Bitbucket. If your team is using Bitbucket, you may want to download this. To begin using, make sure you have set up an Atlassian account first.
+
+When you clone a repository, make sure you are cloning it to the "Projects folder" you set up earlier. To set this up in Sourcetree, go to **Sourcetree > Preferences**. Under "Miscellaneous", set the project folder. It should now be the default.
+
+## Google Cloud
+
+Cloud development solutions such as [Amazon Web Services](https://aws.amazon.com/) or [Google Cloud](https://cloud.google.com/) make life a lot easier for a developer. I tend to use Google Cloud, so I'll provide instructions for what you'll need on your machine to get up and running with Google Cloud.
+
+### Google Cloud SDK
+
+[Google Cloud SDK](https://cloud.google.com/sdk/docs/) is what we'll be using to perform actions both locally and remotely on our Google Cloud projects. It includes command-line tools for interacting with Google Cloud projects, under the `gcloud` moniker, as well as a command-line tool for interacting with Google Cloud storage, under the `gsutil` moniker.
+
+#### Install
+
+Follow the instructions on the [Google Cloud SDK](https://cloud.google.com/sdk/docs/) docs page.
+
+Because we'll be using Python mainly, let's install the [App Engine Python](https://cloud.google.com/appengine/docs/standard/python/download) component.
+
+```
+gcloud components install app-engine-python
+```
+
+We may end up needing the extras component as well, so let's install that too.
+
+```
+gcloud components install app-engine-python-extras
+```
+
+We can see which components we have installed by typing
+
+```
+gcloud components list
+```
+
+Now that we've installed our components, let's configure the SDK. First, authenticate your Google account for the SDK:
+
+```
+gcloud auth application-default login
+```
+
+Second, set some global SDK configuration options. Use the email address you just authenticated with below.
+
+```
+gcloud config set compute/region us-central1
+gcloud config set core/account your_google_account@gmail.com
+```
+
+### Cloud SQL Proxy
+
+If your project is using Cloud SQL, using [Cloud SQL Proxy](https://cloud.google.com/sql/docs/mysql/sql-proxy) makes it very easy to connect to your Cloud SQL database for viewing and management.
+
+#### Install
+
+Download the proxy and make it executable:
+
+```
+curl -o cloud_sql_proxy https://dl.google.com/cloudsql/cloud_sql_proxy.darwin.amd64
+chmod +x cloud_sql_proxy
+```
+
+Copy it into a folder on your `$PATH` so that we can call it by using `cloud_sql_proxy` instead of `path/to/cloud_sql_proxy`:
+
+```
+cp cloud_sql_proxy /usr/local/bin
+```
+
+To use, open your Google Cloud project in the cloud console, navigate to **SQL**, select the instance you want to use, and copy the instance name. Substitute it into the following command:
+
+```
+cloud_sql_proxy -instances='<instance_name>=tcp:9906' # where <instance_name> is the instance name
+```
+
+Your Cloud SQL instance should now be available at localhost (127.0.0.1) at the TCP port 9906.
+
+To open a connection in Sequel Pro, under "Quick Connect", you can type the following:
+
+**Host:** 127.0.0.1 or localhost
+**Username:** a valid MySQL user name for your instance
+**Password:** the password for the user
+**Port:** 9906
+
+Click "Connect" to connect.
 
 ## PostgreSQL
 
-[PostgreSQL](https://www.postgresql.org/) is a popular relational database, and Heroku has first-class support for it.
+[PostgreSQL](https://www.postgresql.org/) is a popular relational database.
 
 Install PostgreSQL using Homebrew:
 
@@ -792,116 +806,8 @@ brew services start postgresql
 
 If you reboot your machine, PostgreSQL will be restarted at login.
 
-## Redis
+## Other apps
 
-[Redis](http://redis.io/) is a blazing fast, in-memory, key-value store, that uses the disk for persistence. It's kind of like a NoSQL database, but there are a lot of [cool things](http://oldblog.antirez.com/post/take-advantage-of-redis-adding-it-to-your-stack.html) that you can do with it that would be hard or inefficient with other database solutions. For example, it's often used as session management or caching by web apps, but it has many other uses.
+Here is a quick list of some apps I use, which you might find useful as well:
 
-To install Redis, use Homebrew:
-
-```
-brew update
-brew install redis
-```
-
-Start it through Homebrew Services with:
-
-```
-brew services start redis
-```
-
-I'll let you refer to Redis' [documentation](http://redis.io/documentation) or other tutorials for more information.
-
-## MongoDB
-
-[MongoDB](http://www.mongodb.org/) is a popular [NoSQL](http://en.wikipedia.org/wiki/NoSQL) database.
-
-Installing it is very easy through Homebrew:
-
-```
-brew update
-brew install mongo
-```
-
-Start it through Homebrew Services with:
-
-```
-brew services start mongo
-```
-
-I'll let you refer to MongoDB's [Getting Started](http://docs.mongodb.org/manual/tutorial/getting-started/) guide for more!
-
-## Elasticsearch
-
-As it says on the box, [Elasticsearch](http://www.elasticsearch.org/) is a "powerful open source, distributed real-time search and analytics engine". It uses an HTTP REST API, making it really easy to work with from any programming language.
-
-You can use elasticsearch for such cool things as real-time search results, autocomplete, recommendations, machine learning, and more.
-
-### Install
-
-Elasticsearch runs on Java, so check if you have it installed by running:
-
-```bash
-java -version
-```
-
-If Java isn't installed yet, a window will appear prompting you to install it. Go ahead and click "Install".
-
-Next, install elasticsearch with:
-
-```bash
-$ brew install elasticsearch
-```
-
-**Note**: Elasticsearch also has a `plugin` program that gets moved to your `PATH`. I find that too generic of a name, so I rename it to `elasticsearch-plugin` by running (will need to do that again if you update elasticsearch):
-
-```bash
-$ mv /usr/local/bin/plugin /usr/local/bin/elasticsearch-plugin
-```
-
-Below I will use `elasticsearch-plugin`, just replace it with `plugin` if you haven't followed this step.
-
-As you guessed, you can add plugins to elasticsearch. A popular one is [elasticsearch-head](http://mobz.github.io/elasticsearch-head/), which gives you a web interface to the REST API. Install it with:
-
-```bash
-$ elasticsearch-plugin --install mobz/elasticsearch-head
-```
-
-### Usage
-
-Start a local elasticsearch server with:
-
-```bash
-$ elasticsearch -f
-```
-
-(The `-f` option tells it to run in the foreground, so you can stop it with `Ctrl+C`.)
-
-Test that the server is working correctly by running:
-
-```bash
-$ curl -XGET 'http://localhost:9200/'
-```
-
-If you installed the elasticsearch-head plugin, you can visit its interface at `http://localhost:9200/_plugin/head/`.
-
-Elasticsearch's [documentation](http://www.elasticsearch.org/guide/) is more of a reference. To get started, I suggest reading some of the blog posts linked on this [StackOverflow answer](http://stackoverflow.com/questions/11593035/beginners-guide-to-elasticsearch/11767610#11767610).
-
-## Projects folder
-
-This really depends on how you want to organize your files, but I like to put all my version-controlled projects in `~/Projects`. Other documents I may have, or things not yet under version control, I like to put in `~/Dropbox` (if you have Dropbox installed), or `~/Documents`.
-
-## Apps
-
-Here is a quick list of some apps I use, and that you might find useful as well:
-
-- [Dropbox](https://www.dropbox.com/): File syncing to the cloud. I put all my documents in Dropbox. It syncs them to all my devices (laptop, mobile, tablet), and serves as a backup as well! **(Free for 2GB)**
-- [Google Drive](https://drive.google.com/): File syncing to the cloud too! I use Google Docs a lot to collaborate with others (edit a document with multiple people in real-time!), and sometimes upload other non-Google documents (pictures, etc.), so the app comes in handy for that. **(Free for 5GB)**
-- [1Password](https://agilebits.com/onepassword): Allows you to securely store your login and passwords. Even if you only use a few different passwords (they say you shouldn't!), this is really handy to keep track of all the accounts you sign up for! Also, they have a mobile app so you always have all your passwords with you (syncs with Dropbox). A little pricey though. There are free alternatives. **($50 for Mac app, $18 for iOS app)**
-- [Marked](http://markedapp.com/): As a developer, most of the stuff you write ends up being in [Markdown](http://daringfireball.net/projects/markdown/). In fact, this `README.md` file (possibly the most important file of a GitHub repo) is indeed in Markdown, written in Sublime Text, and I use Marked to preview the results everytime I save. **($4)**
-- [Path Finder](http://cocoatech.com/pathfinder/): I love OSX, it's Unix so great for developers, and all of it just works and looks pretty! Only thing I "miss" from Windows (OMG what did he say?), is a decent file explorer. I think Finder is a pain to use. So I gladly paid for this alternative, but I understand others might find it expensive just to not have to use Finder. **($40)**
-- [Evernote](https://evernote.com/): If I don't write something down, I'll forget it. As a developer, you learn so many new things every day, and technology keeps changing, it would be insane to want to keep it all in your head. So take notes, sync them to the cloud, and have them on all your devices. To be honest, I switched to [Simplenote](http://simplenote.com/) because I only take text notes, and I got tired of Evernote putting extra spaces between paragraphs when I copy & pasted into other applications. Simplenote is so much better for text notes (and it supports Markdown!). **(Both are free)**
-- [Moom](http://manytricks.com/moom/): Don't waste time resizing and moving your windows. Moom makes this very easy. **($10)**
-
-
-
-
+- [1Password](https://agilebits.com/onepassword) or [Lastpass Password Manager](https://www.lastpass.com): Allows you to securely store your login and passwords. Even if you only use a few different passwords (they say you shouldn't!), this is really handy to keep track of all the accounts you sign up for! Also, these services have a mobile app so you always have all your passwords with you. Having access through multiple sources (web+mobile) will usually cost money, but there are free alternatives.

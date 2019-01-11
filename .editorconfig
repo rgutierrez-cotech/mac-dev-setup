@@ -1,0 +1,31 @@
+# If you are using a text editor that doesn't natively support
+# EditorConfig, please download the relevant plugin and enable
+# it.
+
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+charset = utf-8
+
+[*.{yaml,yml,rb,sh}]
+indent_style = space
+indent_size = 2
+
+[*.html.haml]
+indent_style = space
+indent_size = 2
+
+[{Vagrantfile}]
+indent_style = space
+indent_size = 2
+
+[*.{css,scss,js,html,json,php,py}]
+indent_style = space
+indent_size = 4
+
+[*.html.erb]
+indent_style = space
+indent_size = 4
