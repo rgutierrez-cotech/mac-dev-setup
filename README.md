@@ -283,7 +283,7 @@ curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.g
 
 ## Atom Text Editor
 
-With the terminal, the text editor is a developer's most important tool. Everyone has their preferences, but if you're just getting started and looking for something simple that works, I recommend [Atom](https://atom.io/). Some people prefer [Sublime Text](http://www.sublimetext.com/), so if you would rather use that, look up the instructions in the [original setup instructions](https://raw.githubusercontent.com/nicolashery/mac-dev-setup).
+With the terminal, the text editor is a developer's most important tool. Everyone has their preferences, but if you're just getting started and looking for something simple that works, I recommend [Atom](https://atom.io/). Some people prefer [Sublime Text](http://www.sublimetext.com/), so if you would rather use that, look up the instructions in the [original setup instructions](https://raw.githubusercontent.com/nicolashery/mac-dev-setup#sublime-text).
 
 Go ahead and [download](https://atom.io/) it. Open the **.dmg** file, drag-and-drop in the **Applications** folder, you know the drill now. Launch the application.
 
@@ -291,13 +291,13 @@ Go ahead and [download](https://atom.io/) it. Open the **.dmg** file, drag-and-d
 
 You are welcome to use some of my Atom editor settings. Go to **Atom > Preferences > Editor** and change the following:
 
-**Font Family:** Monaco, Consolas, 'Courier New', Courier
-**Font Size:** 15
-**Preferred Line Length:** 120
-Check **Scroll Past End**
-Check **Soft Tabs**
-**Tab Length:** 4
-**Tab Type:** auto
+- **Font Family:** Monaco, Consolas, 'Courier New', Courier
+- **Font Size:** 15
+- **Preferred Line Length:** 120
+- Check **Scroll Past End**
+- Check **Soft Tabs**
+- **Tab Length:** 4
+- **Tab Type:** auto
 
 ## EditorConfig
 
@@ -780,10 +780,10 @@ Your Cloud SQL instance should now be available at localhost (127.0.0.1) at the 
 
 To open a connection in Sequel Pro, under "Quick Connect", you can type the following:
 
-**Host:** 127.0.0.1 or localhost
-**Username:** a valid MySQL user name for your instance
-**Password:** the password for the user
-**Port:** 9906
+- **Host:** 127.0.0.1 or localhost
+- **Username:** a valid MySQL user name for your instance
+- **Password:** the password for the user
+- **Port:** 9906
 
 Click "Connect" to connect.
 
