@@ -6,8 +6,6 @@ This document describes how I set up my developer environment on a new MacBook o
 
 The document assumes you are new to Mac, but can also be useful if you are reinstalling a system and need some reminder. The steps below were tested on **OS X El Capitan** (10.11).
 
-(**Note**: This is the second version of this guide. If you are looking for the first version written for OS X Mountain Lion, see [1.0](https://github.com/nicolashery/mac-dev-setup/tree/v1.0.0))
-
 - [System update](#system-update)
 - [System preferences](#system-preferences)
 - [Security](#security)
@@ -216,13 +214,13 @@ Scroll down the page and download the latest version. Unzip the archive. In it y
 
 Not a lot of colors yet. We need to tweak a little bit our Unix user's profile for that. This is done (on OS X and Linux), in the `~/.bash_profile` text file (`~` stands for the user's home directory).
 
-We'll come back to the details of that later, but for now, just download the files [.bash_profile](https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.bash_profile), [.bash_prompt](https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.bash_prompt), [.aliases](https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.aliases) attached to this document into your home directory (`.bash_profile` is the one that gets loaded, I've set it up to call the others):
+We'll come back to the details of that later, but for now, just download the files [.bash_profile](https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/master/.bash_profile), [.bash_prompt](https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/master/.bash_prompt), [.aliases](https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/master/.aliases) attached to this document into your home directory (`.bash_profile` is the one that gets loaded, I've set it up to call the others):
 
 ```
 cd ~
-curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.bash_profile
-curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.bash_prompt
-curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.aliases
+curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/master/.bash_profile
+curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/master/.bash_prompt
+curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/master/.aliases
 ```
 
 With that, open a new terminal tab (Cmd+T) and see the change! Try the list commands: `ls`, `ls -lh` (aliased to `ll`), `ls -lha` (aliased to `la`).
@@ -250,11 +248,11 @@ which git
 
 The output should be `/usr/local/bin/git`.
 
-Let's set up some basic configuration. Download the [.gitconfig](https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.gitconfig) file to your home directory:
+Let's set up some basic configuration. Download the [.gitconfig](https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/master/.gitconfig) file to your home directory:
 
 ```
 cd ~
-curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.gitconfig
+curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/master/.gitconfig
 ```
 
 It will add some color to the `status`, `branch`, and `diff` Git commands, as well as a couple aliases. Feel free to take a look at the contents of the file, and add to it to your liking.
@@ -278,12 +276,12 @@ On a Mac, it is important to remember to add `.DS_Store` (a hidden OS X system f
 
 ```
 cd ~
-curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.gitignore
+curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/master/.gitignore
 ```
 
 ## Atom Text Editor
 
-With the terminal, the text editor is a developer's most important tool. Everyone has their preferences, but if you're just getting started and looking for something simple that works, I recommend [Atom](https://atom.io/). Some people prefer [Sublime Text](http://www.sublimetext.com/), so if you would rather use that, look up the instructions in the [original setup instructions](https://raw.githubusercontent.com/nicolashery/mac-dev-setup#sublime-text).
+With the terminal, the text editor is a developer's most important tool. Everyone has their preferences, but if you're just getting started and looking for something simple that works, I recommend [Atom](https://atom.io/). Some people prefer [Sublime Text](http://www.sublimetext.com/), so if you would rather use that, look up the instructions in the [original setup instructions](https://github.com/nicolashery/mac-dev-setup#sublime-text).
 
 Go ahead and [download](https://atom.io/) it. Open the **.dmg** file, drag-and-drop in the **Applications** folder, you know the drill now. Launch the application.
 
@@ -305,7 +303,7 @@ To make sure that all our code uses the same indentation and spacing type, we're
 
 ```
 cd path/to/my/project
-curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/2.0/.editorconfig
+curl -O https://raw.githubusercontent.com/rgutierrez-cotech/mac-dev-setup/master/.editorconfig
 ```
 
 For every new project you start, you'll need to copy this file into the project root directory.
@@ -443,23 +441,31 @@ It will get installed in that virtualenv's folder, and not conflict with other p
 
 Before we install IPython, we'll need to get some dependencies. Run the following:
 
-    $ brew update # Always good to do
-    $ brew install zeromq # Necessary for pyzmq
-    $ brew install pyqt # Necessary for the qtconsole
+```
+brew update # Always good to do
+brew install zeromq # Necessary for pyzmq
+brew install pyqt # Necessary for the qtconsole
+```
 
 It may take a few minutes to build these.
 
 Once it's done, we can install IPython with all the available options:
 
-    $ pip install ipython[zmq,qtconsole,notebook,test]
+```
+pip install ipython[zmq,qtconsole,notebook,test]
+```
 
 You can launch IPython from the command line with `ipython`, but what's more interesting is to use its [QT Console](http://ipython.org/ipython-doc/stable/interactive/qtconsole.html). Launch the QT Console by running:
 
-    $ ipython qtconsole
+```
+ipython qtconsole
+```
 
 You can also customize the font it uses:
 
-    $ ipython qtconsole --ConsoleWidget.font_family="Consolas" --ConsoleWidget.font_size=13
+```
+ipython qtconsole --ConsoleWidget.font_family="Consolas" --ConsoleWidget.font_size=13
+```
 
 And since I'm lazy and I don't want to type or copy & paste that all the time, I'm going to create an alias for it. Create a `.extra` text file in your home directory with `atom ~/.extra` (I've set up `.bash_profile` to load `.extra`), and add the following line:
 
@@ -658,8 +664,10 @@ which openssl
 If you see the system openssl, create a symlink that will for the system to use the Homebrew version:
 
 ```
-ln -s /usr/local/Cellar/openssl/1.0.1g/bin/openssl /usr/local/bin/openssl
+ln -s /usr/local/Cellar/openssl/<version>/bin/openssl /usr/local/bin/openssl
 ```
+
+Where `<version>` is the version number of the Homebrew openssl.
 
 ## MySQL
 
