@@ -88,7 +88,7 @@ An important dependency before Homebrew can work is the **Command Line Developer
 xcode-select --install
 ```
 
-Once that is done, we can install Hombrew by copy-pasting the installation command from the [Homebrew homepage]([Homebrew](http://brew.sh/) inside the terminal.
+Once that is done, we can install Hombrew by copy-pasting the installation command from the [Homebrew homepage](http://brew.sh/) inside the terminal.
 
 ```
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
