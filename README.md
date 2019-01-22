@@ -568,6 +568,14 @@ When it is done, initialize it:
 rbenv init
 ```
 
+It should give you a message about starting `rbenv` automatically. Let's do that by adding something to our `.bash_profile` file:
+
+```
+echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+```
+
+Reload `.bash_profile` by running `source ~/.bash_profile` or by closing and reopening your terminal window.
+
 ### Usage
 
 The following command will show you which versions of Ruby you have installed:
