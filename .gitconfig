@@ -5,6 +5,9 @@
   remotes = remote -v
   # Pretty log output
   hist = log --graph --pretty=format:'%Cred%h%Creset %s%C(yellow)%d%Creset %Cgreen(%cr)%Creset [%an]' --abbrev-commit --date=relative
+  # Wrap tag rename logic in an alias
+  ### usage: git renametag old new
+  renametag = "!sh -c 'set -e;git tag $2 $1; git tag -d $1;git push origin :refs/tags/$1;git push --tags' -"
 
 [color]
   # Use colors in Git commands that are capable of colored output when
