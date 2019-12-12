@@ -17,6 +17,7 @@ The document assumes you are new to Mac, but can also be useful if you are reins
 - [Beautiful terminal](#beautiful-terminal)
 - [Git](#git)
 - [Atom Text Editor](#atom-text-editor)
+- [VSCode](#vscode)
 - [EditorConfig](#editorconfig)
 - [Python](#python)
 - [Node.js](#nodejs)
@@ -297,6 +298,16 @@ You are welcome to use some of my Atom editor settings. Go to **Atom > Preferenc
 - **Tab Length:** 4
 - **Tab Type:** auto
 
+## VSCode
+
+If you want more of an IDE experience with some other neat features, VSCode might be what you're looking for. When I'm working with web application frameworks, like Django, I like VSCode a little better.
+
+Download VSCode here. Open the **.dmg** file, drag-and-drop in the **Applications** folder. Launch the application.
+
+Install the recommended plugins for your language, as well as the EditorConfig plugin (which we will discuss below) and the LiveShare extension pack. Restart VSCode if necessary. Enable LiveShare by logging in with your Microsoft or Github account (I prefer to use github). LiveShare allows you to do live code collaboration sessions.
+
+Pick a nice color theme. I'm a big fan of the Solarized Light color theme, but I don't want it to affect the entire IDE, just the editor window. If you're like me and want to change the editor colors to Solarized Light and not the IDE, download the `settings.json` file from `/application_settings/vscode` and paste it into your own settings.json.
+
 ## EditorConfig
 
 To make sure that all our code uses the same indentation and spacing type, we're going to use the awesome [EditorConfig](https://editorconfig.org/) plugin for our text editor. To install the plugin for Atom, go to **Atom > Preferences > Install**, search for "editorconfig", and install the plugin. Now download the EditorConfig file from this repo and place it at the project root directory.
@@ -418,16 +429,16 @@ Now, let's say you have a project in a directory called `myproject`. You can set
 
 ```
 cd ~/Projects/myproject
-pyenv virtualenv 2.7.11 myproject
+pyenv virtualenv 2.7.11 venv-myproject
 ```
 
 To use your project's virtualenv, you need to **activate** it first. Instead of running `activate`, make sure you are in your project directory and do the following:
 
 ```
-pyenv local myproject
+pyenv local venv-myproject
 ```
 
-You should see a `(myproject)` appear at the beginning of your terminal prompt indicating that you are working inside the virtualenv. Now when you install something:
+You should see a `(venv-myproject)` appear at the beginning of your terminal prompt indicating that you are working inside the virtualenv. Now when you install something:
 
 ```
 pip install <package>
@@ -476,6 +487,19 @@ alias ipy='ipython qtconsole --ConsoleWidget.font_family="Consolas" --ConsoleWid
 Open a fresh terminal. Now when you run `ipy`, it will launch the QT Console with your configured options.
 
 To use the in-line Matplotlib functionality (nice for scientific computing), run `ipy --pylab=inline`.
+
+### Setting up VSCode for python programming
+
+If you'd like to run/debug your python application in VSCode:
+
+1. Create a python virtual environment in your project root, following the instructions above
+2. In VSCode, open the command palette and select *Python: Select Interpreter*
+3. Look for the option with the Python version number and virtual environment name of your project and select that one.
+4. Now we need to set up a debugger launch profile. Click the Debug icon on the furthest-left toolbar.
+5. You should see the debug toolbar and a small menu at the top. Click the gear icon.
+6. Wait a few seconds for a `launch.json` file to appear.
+7. Look through the available Python launch configurations and find one suitable for launching your application.
+8. Modify the `program` and `args` values if necessary, then save.
 
 ## Node.js
 
@@ -669,7 +693,7 @@ If it's outdated, check to see whether the system openssl is still being used by
 which openssl
 ```
 
-If you see the system openssl, create a symlink that will for the system to use the Homebrew version:
+If you see the system openssl, create a symlink that will force the system to use the Homebrew version:
 
 ```
 ln -s /usr/local/Cellar/openssl/<version>/bin/openssl /usr/local/bin/openssl
@@ -805,9 +829,9 @@ Click "Connect" to connect.
 
 ## PostgreSQL
 
-[PostgreSQL](https://www.postgresql.org/) is a popular relational database.
+[PostgreSQL](https://www.postgresql.org/) (now called simply postgres) is a popular relational database.
 
-Install PostgreSQL using Homebrew:
+Install postgres using Homebrew:
 
 ```
 brew update # Always good to do
@@ -820,7 +844,19 @@ It will automatically add itself to Homebrew Services. Start it with:
 brew services start postgresql
 ```
 
-If you reboot your machine, PostgreSQL will be restarted at login.
+If you reboot your machine, postgres will be restarted at login.
+
+If you want to access postgres from the command line, the tool `psql` is available. Just call it with a database to connect to:
+
+```
+psql <database>
+```
+
+In addition to `psql`, a couple other command-line tools have been added. `createuser` will create a user in postgres. `createdb` will do the same, but for a database.
+
+### PSequel
+
+For a gui around postgres, [PSequel](http://www.psequel.com/) works nicely. You can download it [here](http://www.psequel.com/download?version=latest).
 
 ## Other apps
 
