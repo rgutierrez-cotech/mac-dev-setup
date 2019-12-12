@@ -302,7 +302,7 @@ You are welcome to use some of my Atom editor settings. Go to **Atom > Preferenc
 
 If you want more of an IDE experience with some other neat features, VSCode might be what you're looking for. When I'm working with web application frameworks, like Django, I like VSCode a little better.
 
-Download VSCode here. Open the **.dmg** file, drag-and-drop in the **Applications** folder. Launch the application.
+[Download VSCode here](https://code.visualstudio.com/). Open the **.dmg** file, drag-and-drop in the **Applications** folder. Launch the application.
 
 Install the recommended plugins for your language, as well as the EditorConfig plugin (which we will discuss below) and the LiveShare extension pack. Restart VSCode if necessary. Enable LiveShare by logging in with your Microsoft or Github account (I prefer to use github). LiveShare allows you to do live code collaboration sessions.
 
